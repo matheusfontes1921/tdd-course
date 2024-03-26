@@ -54,8 +54,22 @@ public class UserServiceTest {
 
         //Assert (check if the message is equal in both cases)
         assertEquals(expectedThrown,thrown.getMessage(),"The exception message is not similar");
+    }
 
+    @DisplayName("Empty last name should throw illegal argument exception")
+    @Test
+    void testCreateUser_whenLastNameIsEmpty_throwsIllegalArgumentException(){
+        //Arrange
+        String lastName = "";
+        String expectedThrown = "User's last name is empty";
 
+        //Act & Arrange
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+            userService.createUser(firstName,lastName,email,password,repeatedPassword);
+        },"Empty last name should throws an illegal argument exception");
+
+        //Arrange
+        assertEquals(expectedThrown, thrown.getMessage(), "The exception message is not similar");
     }
 
 }
