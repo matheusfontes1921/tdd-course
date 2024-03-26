@@ -72,4 +72,22 @@ public class UserServiceTest {
         assertEquals(expectedThrown, thrown.getMessage(), "The exception message is not similar");
     }
 
+    @DisplayName("Comparing the passwords")
+    @Test
+    void testCreateUser_whenPasswordAndRepeatedPasswordAreDifferent_throwsIllegalArgumentException() {
+
+        //Arrange
+        String password = "12345678";
+        String repeatedPassword = "123456789";
+        String expectedThrown = "The passwords are not matching";
+
+        //Act & Arrange
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            userService.createUser(firstName,lastName,email,password,repeatedPassword);
+        },"The password is equal to the repeated password. None exception shoudl be thrown.");
+
+        //Arrange
+        assertEquals(expectedThrown, thrown.getMessage(), "It should returns a different exception");
+    }
+
 }
