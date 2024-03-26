@@ -4,7 +4,7 @@ import com.tdd.model.User;
 import com.tdd.serviceimpl.UserService;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest {
     @Test
@@ -22,5 +22,22 @@ public class UserServiceTest {
 
         //Assert
         assertNotNull(user, "The created user should not return null");
+    }
+
+    @Test
+    void testCreateUser_whenUserCreated_returnedUserObjectContainsSameFirstName() {
+        //Arrange
+        UserService userService = new UserServiceImpl();
+        String firstName = "Matheus";
+        String lastName = "Silva";
+        String email = "test@test";
+        String password = "123456789";
+        String repeatedPassword = "123456789";
+
+        //Act
+        User user = userService.createUser(firstName,lastName,email,password,repeatedPassword);
+
+        //Assert
+        assertEquals(firstName, user.getFirstName());
     }
 }
