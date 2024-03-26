@@ -22,22 +22,7 @@ public class UserServiceTest {
 
         //Assert
         assertNotNull(user, "The created user should not return null");
+        assertEquals(firstName, user.getFirstName(), "User's first name is incorrect");
     }
 
-    @Test
-    void testCreateUser_whenUserCreated_returnedUserObjectContainsSameFirstName() {
-        //Arrange
-        UserService userService = new UserServiceImpl();
-        String firstName = "Matheus";
-        String lastName = "Silva";
-        String email = "test@test";
-        String password = "123456789";
-        String repeatedPassword = "123456789";
-
-        //Act
-        User user = userService.createUser(firstName,lastName,email,password,repeatedPassword);
-
-        //Assert
-        assertEquals(firstName, user.getFirstName());
-    }
 }
