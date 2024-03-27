@@ -3,6 +3,7 @@ package servicetest;
 import com.tdd.data.UsersRepository;
 import com.tdd.model.User;
 import com.tdd.serviceimpl.UserService;
+import com.tdd.serviceimpl.UserServiceException;
 import com.tdd.serviceimpl.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -100,6 +101,18 @@ public class UserServiceTest {
 
         //Arrange
         assertEquals(expectedThrown, thrown.getMessage(), "It should returns a different exception");
+    }
+
+    @DisplayName("UserServiceException")
+    @Test
+    void testCreateUser_whenSaveMethodThrowsException_thenThrowsUserServiceException(){
+        //Arrange
+        when(usersRepository.save(any(User.class))).thenThrow(RuntimeException.class);
+        //Act
+        assertThrows(UserServiceException.class, ()-> {
+            userService.createUser(firstName,lastName,email,password,repeatedPassword);
+        },"Should have thrown user service exception");
+        //Assert
     }
 
 }
