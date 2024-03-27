@@ -1,7 +1,8 @@
-package com.tdd.serviceimpl;
+package servicetest;
 
 import com.tdd.model.User;
 import com.tdd.serviceimpl.UserService;
+import com.tdd.serviceimpl.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
