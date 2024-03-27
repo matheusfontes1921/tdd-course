@@ -1,5 +1,6 @@
 package servicetest;
 
+import com.tdd.data.UsersRepository;
 import com.tdd.model.User;
 import com.tdd.serviceimpl.UserService;
 import com.tdd.serviceimpl.UserServiceImpl;
@@ -7,11 +8,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
-    UserService userService;
+    @InjectMocks
+    UserServiceImpl userService;
+    @Mock
+    UsersRepository usersRepository;
     String firstName;
     String lastName;
     String email;
@@ -19,7 +27,6 @@ public class UserServiceTest {
     String repeatedPassword;
     @BeforeEach
     void init() {
-        userService = new UserServiceImpl();
         firstName = "Matheus";
         lastName = "Silva";
         email = "test@test";
