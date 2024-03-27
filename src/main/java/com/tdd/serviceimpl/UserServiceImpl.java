@@ -15,6 +15,8 @@ public class UserServiceImpl implements UserService {
         if (!(password.equals(repeatedPassword))) {
             throw new IllegalArgumentException("The passwords are not matching");
         }
-        return new User(firstName, lastName, email, UUID.randomUUID().toString());
+        User user = new User(firstName, lastName, email, UUID.randomUUID().toString());
+        usersRepository.save(user);
+        return user;
     }
 }
