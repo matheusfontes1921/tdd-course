@@ -2,9 +2,7 @@ package servicetest;
 
 import com.tdd.data.UsersRepository;
 import com.tdd.model.User;
-import com.tdd.serviceimpl.UserService;
-import com.tdd.serviceimpl.UserServiceException;
-import com.tdd.serviceimpl.UserServiceImpl;
+import com.tdd.serviceimpl.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +21,8 @@ public class UserServiceTest {
     UserServiceImpl userService;
     @Mock
     UsersRepository usersRepository;
+    @Mock
+    EmailVerificationService emailVerificationService;
     String firstName;
     String lastName;
     String email;
@@ -112,7 +112,22 @@ public class UserServiceTest {
         assertThrows(UserServiceException.class, ()-> {
             userService.createUser(firstName,lastName,email,password,repeatedPassword);
         },"Should have thrown user service exception");
+    }
+
+    @DisplayName("EmailNotificationException is handled")
+    @Test
+    void testCreateUser_whenEmailNotificationExceptionIsThrown_throwsUserServiceException(){
+        //Arrange
+        when(usersRepository.save(any(User.class))).thenReturn(true);
+        doThrow(EmailNotificationServiceException.class).when(emailVerificationService).scheduledEmailConfirmation(any(User.class));
+
+        //Act & Assert
+        assertThrows(UserServiceException.class, ()-> {
+            userService.createUser(firstName,lastName,email,password,repeatedPassword);
+        }, "Should have thrown Email Notification Service Exception");
+
         //Assert
+        verify(emailVerificationService,times(1)).scheduledEmailConfirmation(any(User.class));
     }
 
 }
