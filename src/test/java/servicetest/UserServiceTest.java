@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -38,7 +39,7 @@ public class UserServiceTest {
     @Test
     void testCreateUser_whenUserDetailsProvided_returnsUserObject() {
         //Arrange
-        Mockito.when(usersRepository.save(Mockito.any(User.class))).thenReturn(true);
+        Mockito.when(usersRepository.save(any(User.class))).thenReturn(true);
         //Mockito.any(User.class) - stubbing a method. it means that any element of user class can be used.
         //Act
         User user = userService.createUser(firstName, lastName, email, password, repeatedPassword);
@@ -49,6 +50,7 @@ public class UserServiceTest {
         assertEquals(lastName, user.getLastName(),"User's last name is incorrect");
         assertEquals(email, user.getEmail(), "User's email is incorrect");
         assertNotNull(user.getId(), "User id should not be null");
+        Mockito.verify(usersRepository,times(1)).save(any(User.class)); //ask mockito to verify if the save method is called just one time
     }
     @DisplayName("Empty First Name should throw illegal argument exception")
     @Test
