@@ -1,9 +1,17 @@
 package com.tdd.serviceimpl;
 
+import com.tdd.data.UsersRepository;
+import com.tdd.data.UsersRepositoryImpl;
 import com.tdd.model.User;
 import java.util.UUID;
 
 public class UserServiceImpl implements UserService {
+    UsersRepository usersRepository;
+    public UserServiceImpl(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
+    public UserServiceImpl(){}
+
     @Override
     public User createUser(String firstName, String lastName, String email, String password, String repeatedPassword) {
         if (firstName == null || firstName.trim().isEmpty()) {
@@ -16,7 +24,9 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("The passwords are not matching");
         }
         User user = new User(firstName, lastName, email, UUID.randomUUID().toString());
-        usersRepository.save(user);
+
+        boolean isUserCreated = usersRepository.save(user);
+        if (!isUserCreated) throw new UserServiceException("Could not create user!");
         return user;
     }
 }
