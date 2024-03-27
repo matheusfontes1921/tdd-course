@@ -11,7 +11,7 @@ public class UsersRepositoryImpl implements UsersRepository {
     @Override
     public boolean save(User user) {
         if (!users.containsKey(user.getId())) {
-            /*if does not cotain a key, save to the hashmap */
+            /*if does not contain a key, save to the hashmap */
             users.put(user.getId(), user);
             returnValue = true;
         }

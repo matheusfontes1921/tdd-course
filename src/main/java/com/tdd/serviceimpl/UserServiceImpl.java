@@ -12,7 +12,6 @@ public class UserServiceImpl implements UserService {
         this.usersRepository = usersRepository;
         this.emailVerificationService = emailVerificationService;
     }
-    public UserServiceImpl(){}
 
     @Override
     public User createUser(String firstName, String lastName, String email, String password, String repeatedPassword) {
@@ -41,5 +40,8 @@ public class UserServiceImpl implements UserService {
             throw new UserServiceException(e.getMessage());
         }
         return user;
+    }
+    public void demoMethod(){
+        System.out.println("Demo method");
     }
 }
